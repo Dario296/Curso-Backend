@@ -21,45 +21,67 @@ class Contenedor {
     }
 
     async getById (id) {
-        const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
-        const archivoParse = JSON.parse(producto);
-        const productoEncontrado = archivoParse.find(archivo => archivo.id === id)
-        return productoEncontrado? productoEncontrado : "producto no encontrado o inexistente"
+        try {
+            const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
+            const archivoParse = JSON.parse(producto);
+            const productoEncontrado = archivoParse.find(archivo => archivo.id === id)
+            return productoEncontrado? productoEncontrado : "producto no encontrado o inexistente"
+        } catch (error) {
+            return "El archivo no existe, no hay productos"
+        }
+        
     }
 
     async getAll () {
-        const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
-        const archivoParse = JSON.parse(producto);
-        return archivoParse? archivoParse : 'El archivo no existe'
+        try {
+            const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
+            const archivoParse = JSON.parse(producto);
+            return archivoParse
+        } catch (error) {
+            return "El archivo no existe, no hay productos"
+        }
     }
 
     async update (id, obj) {
-        const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
-        const archivoParse = JSON.parse(producto);
-        let productoEncontrado = archivoParse.find(archivo => archivo.id === id)
-        if (productoEncontrado) {
-            let nuevoArray = archivoParse.filter(archivo => archivo.id !== id)
-            productoEncontrado = {...obj, id: id}
-            nuevoArray.push(productoEncontrado)
-            fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(nuevoArray, null , 2))
-            return `Se actualizo exitosamente el producto ${JSON.stringify(productoEncontrado)}`
-        }else{
-            return "No se encontro el producto"
+        try {
+            const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
+            const archivoParse = JSON.parse(producto);
+            let productoEncontrado = archivoParse.find(archivo => archivo.id === id)
+            if (productoEncontrado) {
+                let nuevoArray = archivoParse.filter(archivo => archivo.id !== id)
+                productoEncontrado = {...obj, id: id}
+                nuevoArray.push(productoEncontrado)
+                fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(nuevoArray, null , 2))
+                return `Se actualizo exitosamente el producto ${JSON.stringify(productoEncontrado)}`
+            }else{
+                return "No se encontro el producto"
+            }
+        } catch (error) {
+            return "El archivo no existe, no hay productos"
         }
     }
 
     async deleteById (id) {
-        const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
-        const archivoParse = JSON.parse(producto)
-        const productoEncontrado = archivoParse.find(archivo => archivo.id === id)
-        let nuevoArray = archivoParse.filter(archivo => archivo.id !== id)
-        fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(nuevoArray, null, 2))
-        return productoEncontrado? 'El producto fue eliminado exitosamente' : 'No fue encontrado el producto'
+        try {
+            const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
+            const archivoParse = JSON.parse(producto)
+            const productoEncontrado = archivoParse.find(archivo => archivo.id === id)
+            let nuevoArray = archivoParse.filter(archivo => archivo.id !== id)
+            fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(nuevoArray, null, 2))
+            return productoEncontrado? 'El producto fue eliminado exitosamente' : 'No fue encontrado el producto'
+        } catch (error) {
+            return "El archivo no existe, no hay productos"
+        }
     }
 
     async deleteAll () {
-        await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8')
-        fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify([], null, 2))
+        try {
+            await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8')
+            fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify([], null, 2))
+        } catch (error) {
+            return "El archivo no existe, no hay productos"
+        }
+        
     }
 }
 
