@@ -7,16 +7,17 @@ class Contenedor {
     }
 
     async save (obj) {
-        const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
-        const archivoParse = JSON.parse(producto);
-        const ultimoId = archivoParse.length
-        if (ultimoId === 0) {
+        try {
+            const producto = await fs.promises.readFile(`./${this.nombre}.txt`, 'utf-8');
+            const archivoParse = JSON.parse(producto);
+            const ultimoId = archivoParse.length
+            archivoParse.push({...obj, id: ultimoId + 1 });
+            fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(archivoParse, null , 2))
+            return `Se creo exitosamente el nuevo producto: ${JSON.stringify(obj)}. con el id: ${ultimoId + 1}`
+        } catch (error) {
             fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify([{...obj, id:1}], null , 2))
             return `Se creo exitosamente el nuevo producto: ${JSON.stringify(obj)}. con el id: 1`
-        }
-        archivoParse.push({...obj, id: ultimoId + 1 });
-        fs.promises.writeFile(`./${this.nombre}.txt`, JSON.stringify(archivoParse, null , 2))
-        return `Se creo exitosamente el nuevo producto: ${JSON.stringify(obj)}. con el id: ${ultimoId + 1}`
+        }      
     }
 
     async getById (id) {
