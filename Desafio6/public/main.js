@@ -20,5 +20,5 @@ function addMessage() {
     }
 
     socket.emit('new-message', message)
-    return
+    return false
 }

@@ -31,4 +31,9 @@ div(class='container.mt-3')
                             td= val.thumbnail
         else
             h3(class="alert alert-danger") No products
-        
+        h1 mi app chat 
+        div(id="messages")
+        form(onsubmit='return addMessage()')
+            input#username(type='text' placeholder='Tu nombre')
+            input#text(type='text' placeholder='Cuentanos algo...')
+            input(type='submit' value='Enviar')
