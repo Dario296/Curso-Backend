@@ -1,0 +1,34 @@
+1 & 2-
+    use ecommerce
+    db.chat.insertMany([{autor: "Dario", mensaje: "Hola", fyh: "17/12/12 17:40"},{autor: "Luis", mensaje: "Hola como estas?", fyh: "17/12/12 17:40"},{autor: "Dario", mensaje: "Bien bien y tu?", fyh: "17/12/12 17:41"},{autor: "Luis", mensaje: "Me alegro que estas bien. Yo tambien estoy bien", fyh: "17/12/12 17:41"},{autor: "Dario", mensaje: "Que bueno. Te queria preguntar que haces hoy a la noche?", fyh: "17/12/12 17:42"},{autor: "Luis", mensaje: "Nada. Porque? necesitas algo?", fyh: "17/12/12 17:42"},{autor: "Dario", mensaje: "No no esta todo bien. Era para invitarte al cine a ve una pelicula", fyh: "17/12/12 17:43"},{autor: "Luis", mensaje: "Me copa la idea. que pelicula es?", fyh: "17/12/12 17:43"},{autor: "Dario", mensaje: "La pelicula es avatar 2. la funcion es a las 22 te parece que nos encontremos ahi a la noche?", fyh: "17/12/12 17:44"},{autor: "Luis", mensaje: "Bueno dale nos vemos ahi", fyh: "17/12/12 17:44"}])
+    db.productos.insertMany([{title: "titulo1",price: 350,thumbnail: "titulo1"},{title: "titulo2",price: 800,thumbnail: "titulo2"},{title: "titulo3",price: 1300,thumbnail: "titulo3"},{title: "titulo4",price: 1750,thumbnail: "titulo4"},{title: "titulo5",price: 2450,thumbnail: "titulo5"},{title: "titulo6",price: 3100,thumbnail: "titulo6"},{title: "titulo7",price: 3900,thumbnail: "titulo7"},{title: "titulo8",price: 4200,thumbnail: "titulo8"},{title: "titulo9",price: 4600,thumbnail: "titulo9"},{title: "titulo10",price: 5000,thumbnail: "titulo10"}])
+
+3-
+    db.chat.find()
+    db.productos.find()
+
+4- 
+    db.chat.estimatedDocumentCount()
+    db.productos.estimatedDocumentCount()
+
+5-
+    a-
+        db.productos.insertOne({title: "titulo11",price: 500,thumbnail: "titulo11"})
+    b-
+        I-
+                db.productos.find({price: {$lte: 1000}})
+        II-
+                db.productos.find({$and: [{price: {$gte: 1000}},{price: {$lte: 3000}}]})
+        III-
+                db.productos.find({price: {$gte: 3000}})
+        IV-
+                db.productos.find({},{title: 1, _id:0}).skip(2).limit(1).sort({price: 1})
+    c-
+        db.productos.updateMany({}, {$set: {stock: 100}})
+    d-
+        db.productos.updateMany({price: {$gte: 4000}}, {$set: {stock: 0}})
+    e-
+        db.productos.deleteMany({price: {$lte: 1000}})
+6-
+    use admin
+    db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]})
