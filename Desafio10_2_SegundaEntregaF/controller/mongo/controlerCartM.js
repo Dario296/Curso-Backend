@@ -41,14 +41,15 @@ const getCarrito = (req, res) => {
 }
 
 const postProductoCarrito = (req, res) => {
-    const idProducto = req.params.id;
+    const idProducto = req.body.id;
     const idCarrito = req.params.id;
 
-    Producto.get('productos', idProducto)
+    Producto.getProducts(idProducto)
         .then(producto => {
-            Carrito.add('carritos', producto, idCarrito)
-                .then(id => {
-                    res.json({id: id});
+            let product = producto
+            Carrito.updateCart(idCarrito, {$push:  {productos: product} })
+                .then(carrito =>{
+                    res.json(carrito);
                 })
                 .catch(err => {
                     res.json(err);
@@ -62,10 +63,17 @@ const postProductoCarrito = (req, res) => {
 const deleteProductoCarrito = (req, res) => {
     const idProducto = req.params.id_prod;
     const idCarrito = req.params.id;
-
-    Carrito.delete('carritos', idCarrito, idProducto)
-        .then(id => {
-            res.json({id: id});
+   
+    Producto.getProducts(idProducto)
+        .then(producto => {
+            let product = producto
+            Carrito.updateCart(idCarrito, {$pull: {productos: product} })
+                .then(carrito =>{
+                    res.json(carrito);
+                })
+                .catch(err => {
+                    res.json(err);
+                })
         })
         .catch(err => {
             res.json(err);

@@ -7,14 +7,11 @@ contenedorProducto.checkIfFileExists();
 const getProductos = (req, res) => {
     const id = req.params.id; 
 
-    console.log(id);
-
     if(id === undefined) {
         const productos = contenedorProducto.getProductos();
         res.json(productos);
     } else {
         const producto = contenedorProducto.getProductoById(id);
-        console.log(producto);
         res.json(producto);
     }
 

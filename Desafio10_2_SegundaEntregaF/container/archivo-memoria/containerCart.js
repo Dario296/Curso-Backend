@@ -48,7 +48,6 @@ class Carrito {
 
     getProductosCarrito = (id) => {
         let carrito = this.getCarritoById(id);
-        console.log(carrito);
         if(carrito === undefined) {
             return {error: 'Carrito no encontrado'};
         } else {

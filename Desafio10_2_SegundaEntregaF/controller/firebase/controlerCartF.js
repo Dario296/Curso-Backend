@@ -76,7 +76,6 @@ const deleteProductoCarrito = (req, res) => {
         .then (cart => {
             let carr = {...cart}
             let producto = carr.Productos.find(doc => doc.id === idProducto);
-            console.log(producto);
             const index = carr.Productos.indexOf(producto);
             carr.Productos.splice(index, 1);
             Carrito.update('carritos', idCarrito, carr)

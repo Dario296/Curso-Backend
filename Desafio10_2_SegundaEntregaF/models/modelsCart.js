@@ -4,7 +4,7 @@ const carritoCollection = "carrito"
 
 const carritoSchema = new mongoose.Schema({
     timestamp: String,
-    productos: Array,
+    productos: [],
 })
 
 const cartModels =   mongoose.model(carritoCollection, carritoSchema)
