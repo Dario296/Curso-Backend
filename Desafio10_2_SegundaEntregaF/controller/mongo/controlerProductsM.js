@@ -4,22 +4,20 @@ const Producto = new MongoContainer();
 
 
 const getProducto = (req, res) => {
-
-    if (!req.params.id) {
-
-        Producto.get('productos')
+    const id = req.params.id
+    if (id) {
+        Producto.getProducts(id)
             .then(productos => {
                 res.json(productos);
             })
             .catch(err => {
                 res.json(err);
             })
-            
-    } else {
-
-        Producto.get('productos', req.params.id)
-            .then(producto => {
-                res.json(producto);
+    }
+    else{
+        Producto.getProducts()
+            .then(productos => {
+                res.json(productos);
             })
             .catch(err => {
                 res.json(err);
@@ -40,7 +38,7 @@ const postProducto = (req, res) => {
         stock: req.body.stock,
     }
 
-    Producto.add('productos', newProducto)
+    Producto.addProducts(newProducto)
         .then(id => {
             res.json({ id: id });
         })
@@ -61,7 +59,7 @@ const updateProducto = (req, res) => {
         stock: req.body.stock,
     }
 
-    Producto.update('productos', req.params.id, producto)
+    Producto.updateProduct(req.params.id, producto)
         .then(id => {
             res.json({ id: id });
         })
@@ -71,7 +69,7 @@ const updateProducto = (req, res) => {
 }
 
 const deleteProducto = (req, res) => {
-    Producto.delete('productos', req.params.id)
+    Producto.deleteProduc( req.params.id)
         .then(id => {
             res.json({ id: id });
         })

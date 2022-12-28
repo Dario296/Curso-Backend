@@ -5,7 +5,10 @@ const Producto = new MongoContainer();
 
 const postCarrito = (req, res) => {
 
-    Carrito.add('carritos', {})
+    Carrito.addCarrito({
+        timestamp: Date.now(),
+        productos: []
+    })
         .then(id => {
             res.json({id: id});
         })
@@ -15,13 +18,26 @@ const postCarrito = (req, res) => {
 }
 
 const getCarrito = (req, res) => {
-    Carrito.get('carritos', req.params.id)
+    const id = req.params.id
+
+    if (id) {
+        Carrito.getCart(id)
         .then(carritos => {
-            res.json(carrito);
+            res.json(carritos);
         })
         .catch(err => {
             res.json(err);
         })
+    }
+    else{
+        Carrito.getCart()
+            .then(carritos => {
+                res.json(carritos);
+            })
+            .catch(err => {
+                res.json(err);
+            })
+    }
 }
 
 const postProductoCarrito = (req, res) => {
@@ -57,7 +73,7 @@ const deleteProductoCarrito = (req, res) => {
 }
 
 const deleteCarrito = (req, res) => {
-    Carrito.delete('carritos', req.params.id)
+    Carrito.deleteCart(req.params.id)
         .then(id => {
             res.json({id: id});
         })

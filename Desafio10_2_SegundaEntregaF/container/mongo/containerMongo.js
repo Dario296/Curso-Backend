@@ -16,60 +16,71 @@ mongoose.connect("mongodb+srv://coderhouse:coderhouse@cluster0.detnzhp.mongodb.n
 
 class MongoContainer {
 
-    // constructor() {
-    //     this.db = mongoose.connect();
-    // }
-
-    // async get(collection, id) {
-    //     if (!id) {
-    //         const query = await this.db.collection(collection).find();
-    //         const docs = query.docs;
-    //         const response = docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    //         return response;
-    //     }
-    //     const doc = await this.db.collection(collection).find({id: id});
-    //     const response = { id: doc.id, ...doc.data() };
-    //     return response;
-    // }
-
-    // async add(collection, data) {
-
-    //     await this.db.collection(collection).save(data);
-    //     const response = { id, ...data };
-    //     return response;
-
-    // }
-
-    // async update(collection, id, data) {
-    //     await this.db.collection(collection).doc(id).update(data);
-    //     const response = { id, ...data };
-    //     return response;
-    // }
-
-    // async delete(collection, id, idProduct) {
-
-    //     if (idProduct) {
-    //         const doc = await this.db.collection(collection).doc(id).get();
-    //         const data = doc.data();
-    //         const productos = data.productos.filter(producto => producto.id !== idProduct);
-    //         await this.db.collection(collection).doc(id).update({ productos });
-    //         return { id };
-    //     }
-
-    //     await this.db.collection(collection).doc(id).delete();
-    //     return { id };
-    // }
-
-    async add(data){
+    async addProducts(data){
         const dataAdd = new modelsProducts(data)
-        await dataAdd.save()
+        const productoAdd = await dataAdd.save()
+        console.log(productoAdd);
+        return productoAdd
     }
 
+    async addCarrito(data){
+        const dataAdd = new cartModels(data)
+        const carritoadd = await dataAdd.save()
+        console.log(carritoadd);
+        return carritoadd
+    }
+
+    async getProducts(id){
+        const idProduct = id
+        if (idProduct) {
+            const produc = await modelsProducts.find({_id: idProduct})
+            console.log(produc);
+            return produc
+        }
+        else{
+            const produc = await modelsProducts.find()
+            console.log(produc);
+            return produc
+        }
+    }
+
+    async getCart (id){
+        const idProduct = id
+        if (idProduct) {
+            const produc = await cartModels.find({_id: idProduct})
+            console.log(produc);
+            return produc
+        }
+        else{
+            const produc = await cartModels.find()
+            console.log(produc);
+            return produc
+        }
+    }
+
+    async updateProduct(id, data){
+        const producUpdate = await modelsProducts.updateOne({_id: id}, data)
+        console.log(producUpdate);
+        return producUpdate
+    }
+
+    async updateCart(id, data){
+        const producUpdate = await cartModels.updateOne({_id: id}, data)
+        console.log(producUpdate);
+        return producUpdate
+    }
+
+    async deleteProduc(id){
+        const producDelete = await modelsProducts.deleteOne({_id : id})
+        console.log(producDelete);
+        return producDelete
+    }
+
+    async deleteCart(id){
+        const producDelete = await cartModels.deleteOne({_id : id})
+        console.log(producDelete);
+        return producDelete
+    }
 }
-
-
-const Pr = new MongoContainer
-
-Pr.add({timestamp: "23545654",nombre: "juan",descripcion: "String",codigo: "asgd565",precio: 100,foto: "String",stock: 10,})
 
 module.exports = MongoContainer;

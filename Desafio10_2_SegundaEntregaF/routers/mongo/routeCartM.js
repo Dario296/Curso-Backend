@@ -11,7 +11,7 @@ carritoMongoRouter.use(logRequestInfo);
 
 carritoMongoRouter.post('/', logRequestInfo, postCarrito);
 carritoMongoRouter.delete('/:id', logRequestInfo, deleteCarrito);
-carritoMongoRouter.get('/:id', logRequestInfo, getCarrito);
+carritoMongoRouter.get('/:id?', logRequestInfo, getCarrito);
 carritoMongoRouter.post('/:id', logRequestInfo, postProductoCarrito);
 carritoMongoRouter.delete('/:id/:id_prod', logRequestInfo, deleteProductoCarrito);
 
