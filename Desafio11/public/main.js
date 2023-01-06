@@ -3,7 +3,7 @@ const socket = io()
 socket.on('messages', data => {
     const html = data.map(msj => {
         return `<div>
-        <strong>${msj.author}</strong>
+        <strong>${msj.autor.nombre}</strong>
         <strong>${msj.fyh}</strong>
         <em>${msj.text}</em>
         </div>`
@@ -15,7 +15,14 @@ socket.on('messages', data => {
 
 function addMessage() {
     const message = {
-        author: document.getElementById("username").value,
+        autor: {
+            id: document.getElementById("email").value,
+            nombre: document.getElementById("nombreChat").value,
+            apellido: document.getElementById("apellido").value,
+            edad: document.getElementById("edad").value,
+            alias: document.getElementById("alias").value,
+            avatar: document.getElementById("avatar").value,
+        },
         text: document.getElementById("text").value
     }
 

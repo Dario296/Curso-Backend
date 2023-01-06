@@ -35,7 +35,7 @@ const add = (req, res) => {
     }
     Producto.add(newProducto)
         .then(id => {
-            res.json({ id: id });
+            res.json({ id: id }, res.redirect('/productos'));
         })
         .catch(err => {
             res.json(err);
