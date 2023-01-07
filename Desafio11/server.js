@@ -1,5 +1,6 @@
 const express = require('express');
 const productos = require('./routers/routers');
+const productosTest = require('./routers/routersTest');
 const { Server: HttpServer } = require('http')
 const { Server: IOServer } = require('socket.io')
 const container = require('./containers/container');
@@ -17,14 +18,18 @@ app.use(express.static(__dirname + "/Public"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/productos', productos);
+app.use('/test', productosTest);
 
 io.on('connection', async socket =>{
-  socket.emit('messages', await chat.getChat())
+  
+  const listaMensajes = await chat.getChat()
+  console.log(listaMensajes);
+  socket.emit('messages', listaMensajes)
 
   socket.on('new-message', async data => {
     await chat.addChat({...data, fyh: new Date().toLocaleString()})
 
-    io.sockets.emit('messages', await chat.getChat())
+    io.sockets.emit('messages', listaMensajes)
   })
 })
 
