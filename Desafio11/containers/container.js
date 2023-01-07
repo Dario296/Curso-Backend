@@ -44,7 +44,12 @@ class Container {
     }
     
     async getChat(){
-        const data = await modelsChat.find()
+        const data = await modelsChat.find({},{mensajes:1, _id:0})
+        return data
+    }
+
+    async getChatId(){
+        const data = await modelsChat.find({},{_id:1,})
         return data
     }
 
@@ -52,6 +57,11 @@ class Container {
         const dataAdd = new modelsChat(data)
         const add = await dataAdd.save()
         return add
+    }
+
+    async updateChat(id, data){
+        const update = await modelsChat.updateOne({_id: id}, data)
+        return update
     }
 
 }

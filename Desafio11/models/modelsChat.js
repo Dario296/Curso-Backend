@@ -3,17 +3,7 @@ const mongoose = require('mongoose');
 const collectionChat = "chat"
 
 const schemaChat = new mongoose.Schema({
-    autor:
-        {
-            id: String,
-            nombre: String,
-            apellido: String,
-            edad: Number,
-            alias: String,
-            avatar: String
-        },
-    text: String,
-    fyh: String
+    mensajes: []
 })
 
 const models = mongoose.model(collectionChat, schemaChat)
