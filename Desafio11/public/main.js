@@ -1,7 +1,7 @@
 const socket = io()
 
 socket.on('messages', data => {
-    const html = data[0].mensajes.map(msj => {
+    const html = data.map(msj => {
         return `<div>
         <strong>${msj.autor.nombre}</strong>
         <strong>${msj.fyh}</strong>
@@ -27,5 +27,5 @@ function addMessage() {
     }
 
     socket.emit('new-message', message)
-    return false
+    // return false
 }
