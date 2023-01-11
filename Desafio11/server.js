@@ -25,30 +25,31 @@ app.use('/test', productosTest);
 io.on('connection', async socket =>{
 
   const listaMensajes = await chat.getChat()
-  
   const strin = JSON.stringify(listaMensajes)
   const data = JSON.parse(strin)
   const mensajes = {
     id: 'backendCoder09',
     messages: data
   };
+  // print(mensajes)
+  console.log('Longitud del objeto original: ' + JSON.stringify(mensajes).length)
 
   const authorSchema = new schema.Entity("author",{},{idAttribute: "email"});
-              
   const messageSchema = new schema.Entity("message", {
     author: authorSchema
   });
-  
   const messagesSchema = new schema.Entity("messages", {
     messages: [messageSchema]
   });
-
   const messagesNorm = normalize(mensajes, messagesSchema);
-  // const objDenormalizado = denormalize(messagesNorm.result, mensajes, messagesNorm.entities)
+  // print(messagesNorm)
+  console.log('Longitud del objeto normalizado: ' + JSON.stringify(messagesNorm).length)
 
+  const objDenormalizado = denormalize(messagesNorm.result, messagesSchema, messagesNorm.entities)
+  // print(objDenormalizado)
+  console.log('Longitud del objeto denormalizado: ' + JSON.stringify(objDenormalizado).length)
 
-  const comprecion = 100 - JSON.stringify(messagesNorm).length * 100 / JSON.stringify(mensajes).length + "%"
-  console.log(comprecion);
+  console.log('Porcentaje de compresion: ' + (100 - (JSON.stringify(messagesNorm).length * 100 / JSON.stringify(mensajes).length)) + "%")
 
   socket.emit('messages', listaMensajes)
 
