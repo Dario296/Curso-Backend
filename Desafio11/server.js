@@ -23,15 +23,33 @@ app.use('/productos', productos);
 app.use('/test', productosTest);
 
 io.on('connection', async socket =>{
-  const listaMensajes = await chat.getChat()
 
-  const autor = new schema.Entity('autor')
-  const mensajes = new schema.Entity('mensajes', {
-    autores: [autor]
-  })
-  const objNormalizado = normalize(listaMensajes, mensajes)
-  const objDenormalizado = denormalize(objNormalizado.result, mensajes, objNormalizado.entities)
-  print(listaMensajes);
+  const listaMensajes = await chat.getChat()
+  // console.log(listaMensajes);
+  // console.log(listaMensajes);
+  // const strin = JSON.stringify(listaMensajes)
+  // const data = JSON.parse(strin)
+
+  const lisMensajes = {
+    id:"mensajes",
+    listaMensajes
+  }
+
+  const authorSchema = new schema.Entity("autor",{},{idAttribute: "email"});
+
+  const messageSchema = new schema.Entity("post", {
+    autor: authorSchema,
+  },{idAttribute: "id"});
+
+  const messagesSchema = new schema.Entity("posts", {
+    mensajes: [messageSchema],
+  },{idAttribute: "id"});
+
+  const messagesNorm = normalize(lisMensajes, messagesSchema);
+  print(messagesNorm);
+  // const objNormalizado = normalize(lisMensajes, mensajes)
+  // const objDenormalizado = denormalize(objNormalizado.result, mensajes, objNormalizado.entities)
+  // print(objNormalizado);
 
 
   // console.log('Longitud del objeto original: ' + JSON.stringify(listaMensajes).length)
@@ -42,14 +60,17 @@ io.on('connection', async socket =>{
   socket.emit('messages', listaMensajes)
 
   socket.on('new-message', async data => {
-    await chat.addChat({...data, fyh: new Date().toLocaleString()})
+    if (listaMensajes.length === 0) {
+      return await chat.addChat({...data, fyh: new Date().toLocaleString(), id: 1})
+    }
+    await chat.addChat({...data, fyh: new Date().toLocaleString(), id: listaMensajes.length +1})
 
     io.sockets.emit('messages', listaMensajes)
   })
 })
 
 function print(objeto) {
-    console.log(util.inspect(objeto,false,12,true))
+  console.log(util.inspect(objeto,false,12,true))
 }
 
 httpServer.listen(port, () => {

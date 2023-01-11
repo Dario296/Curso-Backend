@@ -44,7 +44,7 @@ class Container {
     }
     
     async getChat(){
-        const data = await modelsChat.find()
+        const data = await modelsChat.find({}, {_id:0, __v:0})
         return data
     }
 

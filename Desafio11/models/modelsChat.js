@@ -5,7 +5,7 @@ const collectionChat = "chat"
 const schemaChat = new mongoose.Schema({
     autor:
         {
-            id: String,
+            email: String,
             nombre: String,
             apellido: String,
             edad: Number,
@@ -13,7 +13,8 @@ const schemaChat = new mongoose.Schema({
             avatar: String
         },
     text: String,
-    fyh: String
+    fyh: String,
+    id: Number
 })
 
 const models = mongoose.model(collectionChat, schemaChat)

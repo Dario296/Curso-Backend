@@ -16,7 +16,7 @@ socket.on('messages', data => {
 function addMessage() {
     const message = {
         autor: {
-            id: document.getElementById("email").value,
+            email: document.getElementById("email").value,
             nombre: document.getElementById("nombreChat").value,
             apellido: document.getElementById("apellido").value,
             edad: document.getElementById("edad").value,
