@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const collectionChat = "chat"
 
 const schemaChat = new mongoose.Schema({
-    autor:
+    author:
         {
             email: String,
             nombre: String,

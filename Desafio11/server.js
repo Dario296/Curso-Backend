@@ -25,37 +25,30 @@ app.use('/test', productosTest);
 io.on('connection', async socket =>{
 
   const listaMensajes = await chat.getChat()
-  // console.log(listaMensajes);
-  // console.log(listaMensajes);
-  // const strin = JSON.stringify(listaMensajes)
-  // const data = JSON.parse(strin)
+  
+  const strin = JSON.stringify(listaMensajes)
+  const data = JSON.parse(strin)
+  const mensajes = {
+    id: 'backendCoder09',
+    messages: data
+  };
 
-  const lisMensajes = {
-    id:"mensajes",
-    listaMensajes
-  }
+  const authorSchema = new schema.Entity("author",{},{idAttribute: "email"});
+              
+  const messageSchema = new schema.Entity("message", {
+    author: authorSchema
+  });
+  
+  const messagesSchema = new schema.Entity("messages", {
+    messages: [messageSchema]
+  });
 
-  const authorSchema = new schema.Entity("autor",{},{idAttribute: "email"});
-
-  const messageSchema = new schema.Entity("post", {
-    autor: authorSchema,
-  },{idAttribute: "id"});
-
-  const messagesSchema = new schema.Entity("posts", {
-    mensajes: [messageSchema],
-  },{idAttribute: "id"});
-
-  const messagesNorm = normalize(lisMensajes, messagesSchema);
-  print(messagesNorm);
-  // const objNormalizado = normalize(lisMensajes, mensajes)
-  // const objDenormalizado = denormalize(objNormalizado.result, mensajes, objNormalizado.entities)
-  // print(objNormalizado);
+  const messagesNorm = normalize(mensajes, messagesSchema);
+  // const objDenormalizado = denormalize(messagesNorm.result, mensajes, messagesNorm.entities)
 
 
-  // console.log('Longitud del objeto original: ' + JSON.stringify(listaMensajes).length)
-  // console.log('Longitud del objeto normalizado: ' + JSON.stringify(objNormalizado).length)
-  // console.log('Longitud del objeto denormalizado: ' + JSON.stringify(objDenormalizado).length)
-  // console.log('Porcentaje de compresion: ' + (100 - (JSON.stringify(objNormalizado).length * 100 / JSON.stringify(holding).length)) + "%")
+  const comprecion = 100 - JSON.stringify(messagesNorm).length * 100 / JSON.stringify(mensajes).length + "%"
+  console.log(comprecion);
 
   socket.emit('messages', listaMensajes)
 
