@@ -13,7 +13,7 @@ export const getSignUp = (req, res) => {
 };
 
 export const getLogout = (req, res) => {
-    const usuario = req.user.name;
+    const usuario = req.user.username;
     req.logout(err => {
         const saludo = `Hasta luego ${usuario}`;
         res.render("saludo", {saludo});

@@ -13,7 +13,7 @@ export const get = (req, res) => {
             });
     }
     else{
-        const usuario = req.user.name
+        const usuario = req.user.username
         const saludo = `Bienvenido ${usuario}`
         Producto.get()
             .then(productos => {

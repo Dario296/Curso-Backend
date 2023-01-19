@@ -4,6 +4,7 @@ import { getSignIn, getSignUp, getLogout, } from "../controlers/controlerUsuario
 import { Router } from "express";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
+import bCrypt from "bcrypt";
 
 const dbUsuario = new container();
 const productos = Router();
@@ -11,6 +12,10 @@ const ingresar = Router();
 const registrarse = Router();
 const salir = Router();
 
+function createHash(password) {
+    return bCrypt.hashSync( password, bCrypt.genSaltSync(10), null );
+}
+  
 passport.use("register", new LocalStrategy({
     passReqToCallback: true,
 }, async (req, username, password, done) => {
@@ -24,7 +29,7 @@ passport.use("register", new LocalStrategy({
 
     const newUser = {
         username,
-        password,
+        password: createHash(password),
         name,
     };
 
@@ -32,6 +37,10 @@ passport.use("register", new LocalStrategy({
 
     done(null, newUser);
 }));
+
+function isValidPassword(user, password) {
+    return bCrypt.compareSync(password, user.password);
+}
 
 passport.use("login", new LocalStrategy(async (username, password, done) => {
 
@@ -41,7 +50,7 @@ passport.use("login", new LocalStrategy(async (username, password, done) => {
         return done("no existe el usuario", false);
     };
 
-    if (usuario.password != password) {
+    if (!isValidPassword(usuario, password)) {
         return done("Contraseña incorrecta", false)
     };
 
