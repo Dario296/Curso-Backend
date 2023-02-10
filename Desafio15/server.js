@@ -19,6 +19,7 @@ import dotenv from "dotenv";
 import cluster from "cluster";
 import os from "os";
 
+const app = express();
 const numCPUs = os.cpus().length;
 
 const config = {
@@ -34,11 +35,12 @@ if (args.modo == "CLUSTER" && cluster.isPrimary) {
 
   for (let index = 0; index < numCPUs; index++) {
     cluster.fork();
-
-    cluster.on("exit", (worker) => {
-      console.log(`worker ${worker.process.pid} termino`);
-    });
   }
+
+  cluster.on("exit", (worker) => {
+    console.log(`worker ${worker.process.pid} termino`);
+    cluster.fork()
+  });
 } else {
   dotenv.config();
 
@@ -47,7 +49,6 @@ if (args.modo == "CLUSTER" && cluster.isPrimary) {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const chat = new container();
-  const app = express();
   const httpServer = createServer(app);
   const io = new Server(httpServer);
   const advancedOptions = {useNewUrlParser: true, useUnifiedTopology:true};
