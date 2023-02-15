@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "aaaaa.js",
+  "main": "./utils/benchmark.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./utils/benchmark.js",
+    "start": "0x server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "autocannon": "^7.10.0",
     "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
@@ -24,8 +26,8 @@
     "normalizr": "^3.6.2",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "pino": "^8.10.0",
     "pug": "^3.0.2",
-    "socket.io": "^4.5.4"
+    "socket.io": "^4.5.4",
+    "winston": "^3.8.2"
   }
 }

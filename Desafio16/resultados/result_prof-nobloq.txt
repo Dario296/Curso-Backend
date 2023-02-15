@@ -1,0 +1,144 @@
+Statistical profiling result from prof_fork_nobloq.log, (1692 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+   1505   88.9%          C:\Windows\SYSTEM32\ntdll.dll
+    178   10.5%          C:\Program Files\nodejs\node.exe
+      1    0.1%          C:\Windows\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      1    0.1%   12.5%  RegExp: ^\/productos\/?(?=\/|$)
+      1    0.1%   12.5%  JS: ^session F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:179:26
+      1    0.1%   12.5%  JS: ^processTimers node:internal/timers:496:25
+      1    0.1%   12.5%  JS: ^isFileType node:fs:198:20
+      1    0.1%   12.5%  JS: ^Module.require node:internal/modules/cjs/loader:1119:36
+      1    0.1%   12.5%  JS: ^<anonymous> F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\request.js:467:36
+      1    0.1%   12.5%  JS: *resolve node:path:162:10
+      1    0.1%   12.5%  JS: *nextPart node:fs:2470:31
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+      8    0.5%  100.0%  JavaScript
+      0    0.0%    0.0%  C++
+      8    0.5%  100.0%  GC
+   1684   99.5%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+   1505   88.9%  C:\Windows\SYSTEM32\ntdll.dll
+
+    178   10.5%  C:\Program Files\nodejs\node.exe
+    138   77.5%    C:\Program Files\nodejs\node.exe
+     34   24.6%      JS: ^internalCompileFunction node:internal/vm:31:33
+     34  100.0%        JS: ^wrapSafe node:internal/modules/cjs/loader:1139:18
+     34  100.0%          JS: ^Module._compile node:internal/modules/cjs/loader:1200:37
+     34  100.0%            JS: ^Module._extensions..js node:internal/modules/cjs/loader:1255:37
+     20   14.5%      JS: ^moduleStrategy node:internal/modules/esm/translators:112:56
+     20  100.0%        JS: ^moduleProvider node:internal/modules/esm/loader:444:28
+     20  100.0%          C:\Program Files\nodejs\node.exe
+      6    4.3%      C:\Program Files\nodejs\node.exe
+      2   33.3%        JS: ^readPackage node:internal/modules/cjs/loader:345:21
+      2  100.0%          JS: ^readPackageScope node:internal/modules/cjs/loader:387:26
+      1   50.0%            JS: ~trySelf node:internal/modules/cjs/loader:507:17
+      1   50.0%            JS: ^trySelf node:internal/modules/cjs/loader:507:17
+      1   16.7%        JS: ^header F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\response.js:777:29
+      1  100.0%          JS: ^contentType F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\response.js:619:32
+      1  100.0%            JS: ^send F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\response.js:111:25
+      1   16.7%        JS: ^format F:\Trabajos\Curso-Backend\Desafio16\node_modules\content-type\index.js:65:17
+      1  100.0%          JS: ^setCharset F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\utils.js:248:41
+      1  100.0%            JS: ^send F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\response.js:111:25
+      1   16.7%        JS: ^Module._findPath node:internal/modules/cjs/loader:567:28
+      1  100.0%          JS: ^Module._resolveFilename node:internal/modules/cjs/loader:968:35
+      1  100.0%            JS: ^Module._load node:internal/modules/cjs/loader:871:24
+      1   16.7%        JS: *realpathSync node:fs:2492:22
+      1  100.0%          JS: ^toRealPath node:internal/modules/cjs/loader:459:20
+      1  100.0%            JS: ^tryFile node:internal/modules/cjs/loader:450:17
+      5    3.6%      JS: ^writevGeneric node:internal/stream_base_commons:122:23
+      5  100.0%        JS: ^Socket._writeGeneric node:net:892:42
+      5  100.0%          JS: ^Socket._writev node:net:929:36
+      5  100.0%            JS: ^doWrite node:internal/streams/writable:401:17
+      5    3.6%      JS: ^stat node:internal/modules/cjs/loader:154:14
+      3   60.0%        JS: ^Module._findPath node:internal/modules/cjs/loader:567:28
+      3  100.0%          JS: ^Module._resolveFilename node:internal/modules/cjs/loader:968:35
+      3  100.0%            JS: ^Module._load node:internal/modules/cjs/loader:871:24
+      2   40.0%        JS: ^tryFile node:internal/modules/cjs/loader:450:17
+      2  100.0%          JS: ^tryExtensions node:internal/modules/cjs/loader:466:23
+      2  100.0%            JS: ^Module._findPath node:internal/modules/cjs/loader:567:28
+      4    2.9%      JS: ^openSync node:fs:576:18
+      4  100.0%        JS: ^readFileSync node:fs:450:22
+      4  100.0%          JS: ^Module._extensions..js node:internal/modules/cjs/loader:1255:37
+      4  100.0%            JS: ^Module.load node:internal/modules/cjs/loader:1091:33
+      4    2.9%      JS: ^initialize F:\Trabajos\Curso-Backend\Desafio16\node_modules\passport\lib\middleware\initialize.js:51:29
+      3   75.0%        JS: ^handle F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\layer.js:86:49
+      3  100.0%          JS: ^trim_prefix F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\index.js:293:23
+      3  100.0%            JS: *next F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\index.js:177:16
+      1   25.0%        JS: *trim_prefix F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\index.js:293:23
+      1  100.0%          JS: *next F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\index.js:177:16
+      1  100.0%            JS: ^session F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:179:26
+      4    2.9%      JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+      4  100.0%        JS: ^requireBuiltin node:internal/bootstrap/loaders:355:24
+      2   50.0%          JS: ~<anonymous> node:stream:1:1
+      2  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+      1   25.0%          JS: ~<anonymous> node:internal/fs/promises:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+      1   25.0%          JS: ~<anonymous> node:child_process:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+      3    2.2%      JS: ~configSecureContext node:internal/tls/secure-context:124:29
+      3  100.0%        JS: ~createSecureContext node:_tls_common:98:29
+      3  100.0%          JS: ~connect node:_tls_wrap:1607:35
+      3  100.0%            JS: ~makeConnection F:\Trabajos\Curso-Backend\Desafio16\node_modules\mongodb\lib\cmap\connect.js:256:24
+      3    2.2%      JS: ^realpathSync node:fs:2492:22
+      3  100.0%        JS: ^toRealPath node:internal/modules/cjs/loader:459:20
+      3  100.0%          JS: ^tryFile node:internal/modules/cjs/loader:450:17
+      2   66.7%            JS: ^tryExtensions node:internal/modules/cjs/loader:466:23
+      1   33.3%            JS: ^tryPackage node:internal/modules/cjs/loader:404:20
+      3    2.2%      JS: ^randomFillSync node:internal/crypto/random:119:24
+      3  100.0%        JS: ^randomBytes node:internal/crypto/random:99:21
+      3  100.0%          JS: ^randomBytesSync F:\Trabajos\Curso-Backend\Desafio16\node_modules\random-bytes\index.js:72:25
+      3  100.0%            JS: ^uidSync F:\Trabajos\Curso-Backend\Desafio16\node_modules\uid-safe\index.js:75:18
+      2    1.4%      JS: ^writeHead node:_http_server:334:19
+      2  100.0%        JS: ^writeHead F:\Trabajos\Curso-Backend\Desafio16\node_modules\on-headers\index.js:28:29
+      2  100.0%          JS: ^_implicitHeader node:_http_server:329:68
+      2  100.0%            JS: ^write_ node:_http_outgoing:871:16
+      2    1.4%      JS: ^store.generate F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:158:28
+      2  100.0%        JS: ^generate F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:363:22
+      2  100.0%          JS: ^session F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:179:26
+      1   50.0%            JS: ^handle F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\layer.js:86:49
+      1   50.0%            JS: *trim_prefix F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\router\index.js:293:23
+      2    1.4%      JS: ^statSync node:fs:1593:18
+      1   50.0%        JS: ~tryStatSync node:internal/modules/esm/resolve:143:3
+      1  100.0%          JS: ~finalizeResolution node:internal/modules/esm/resolve:213:28
+      1  100.0%            JS: ~moduleResolve node:internal/modules/esm/resolve:828:23
+      1   50.0%        JS: ^tryStatSync node:internal/modules/esm/resolve:143:3
+      1  100.0%          JS: ^finalizeResolution node:internal/modules/esm/resolve:213:28
+      1  100.0%            JS: ^moduleResolve node:internal/modules/esm/resolve:828:23
+      2    1.4%      JS: ^slice node:buffer:597:12
+      2  100.0%        JS: ^toString node:buffer:787:46
+      2  100.0%          JS: ^readFileSync node:fs:450:22
+      2  100.0%            JS: ^Module._extensions..js node:internal/modules/cjs/loader:1255:37
+      2    1.1%    JS: ^write_ node:_http_outgoing:871:16
+      2  100.0%      JS: ^end node:_http_outgoing:991:45
+      2  100.0%        JS: ^end F:\Trabajos\Curso-Backend\Desafio16\node_modules\express-session\index.js:250:27
+      2  100.0%          JS: ^send F:\Trabajos\Curso-Backend\Desafio16\node_modules\express\lib\response.js:111:25
+      2  100.0%            JS: ^<anonymous> file:///F:/Trabajos/Curso-Backend/Desafio16/routers/info.js:34:15
+      2    1.1%    JS: *requireBuiltin node:internal/bootstrap/loaders:355:24
+      1   50.0%      JS: ~<anonymous> node:worker_threads:1:1
+      1  100.0%        JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+      1  100.0%          JS: ^compileForPublicLoader node:internal/bootstrap/loaders:263:25
+      1  100.0%            JS: ^loadBuiltinModule node:internal/modules/helpers:54:27
+      1   50.0%      JS: ~<anonymous> node:internal/crypto/cipher:1:1
+      1  100.0%        JS: *requireBuiltin node:internal/bootstrap/loaders:355:24
+      1  100.0%          JS: ~<anonymous> node:crypto:1:1
+      1  100.0%            JS: ^compileForInternalLoader node:internal/bootstrap/loaders:318:27
+

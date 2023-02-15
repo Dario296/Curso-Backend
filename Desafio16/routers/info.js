@@ -32,6 +32,7 @@ infoCompre.get('/', compression(), (req, res) => {
 });
 
 info.get('/', (req, res) => {
+  const { url, method } = req;
   logger.info(`Ruta ${method} ${url}`);
   res.send(datos);
 });

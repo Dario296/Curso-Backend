@@ -3,6 +3,7 @@ import logger from '../utils/logers.js';
 const Producto = new container();
 
 export const get = (req, res) => {
+  const { url, method } = req;
   const id = req.params.id;
   if (id) {
     logger.info(`Ruta ${method} ${url}`);
@@ -28,6 +29,7 @@ export const get = (req, res) => {
 };
 
 export const add = (req, res) => {
+  const { url, method } = req;
   logger.info(`Ruta ${method} ${url}`);
   const newProducto = {
     timestamp: Date.now(),
@@ -48,6 +50,7 @@ export const add = (req, res) => {
 };
 
 export const update = (req, res) => {
+  const { url, method } = req;
   logger.info(`Ruta ${method} ${url}`);
   const producto = {
     timestamp: Date.now(),
@@ -68,6 +71,7 @@ export const update = (req, res) => {
 };
 
 export const Delete = (req, res) => {
+  const { url, method } = req;
   logger.info(`Ruta ${method} ${url}`);
   Producto.delete(req.params.id)
     .then((id) => {

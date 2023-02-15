@@ -91,7 +91,6 @@ if (args.modo == 'CLUSTER' && cluster.isPrimary) {
 
   app.get('*', (req, res) => {
     const { url, method } = req;
-
     logger.warn(`Ruta ${method} ${url} no esta implementada`);
     res.send(`Ruta ${method} ${url} no esta implementada`);
   });

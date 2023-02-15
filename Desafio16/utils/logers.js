@@ -1,17 +1,33 @@
-import pino from 'pino';
+import winston, { format } from 'winston';
 
+const { combine, prettyPrint, timestamp } = winston.format;
+const LEVEL = Symbol.for('level');
+function filterOnly(level) {
+  return format(function (info) {
+    if (info[LEVEL] === level) {
+      return info;
+    }
+  })();
+}
 function buildDefaultLogger() {
-  const consoLogger = pino();
-  consoLogger.level = 'info';
-  return consoLogger;
+  return winston.createLogger({
+    format: combine(timestamp(), prettyPrint()),
+    transports: [new winston.transports.Console({ level: 'info' })],
+  });
 }
 
 function buildProdLogger() {
-  const warnLogger = pino('warn.log');
-  warnLogger.level = 'warn';
-  const errorLogger = pino('error.log');
-  errorLogger.level = 'error';
-  return warnLogger, errorLogger;
+  return winston.createLogger({
+    format: combine(timestamp(), prettyPrint()),
+    transports: [
+      new winston.transports.File({
+        level: 'warn',
+        format: filterOnly('warn'),
+        filename: 'warn.log',
+      }),
+      new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    ],
+  });
 }
 
 let logger = buildDefaultLogger();
@@ -20,3 +36,6 @@ if (process.env.NODE_ENV == 'prod') {
 }
 
 export default logger;
+
+// export NODE_ENV=prod
+// unset NODE_ENV
