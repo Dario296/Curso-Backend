@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import modelsUsuario from '../models/modelsUsuario.js';
 import logger from '../utils/logers.js';
 
-dotenv.config();
-
 const MONGO = process.env.MONGO;
 
 mongoose.set('strictQuery', false);

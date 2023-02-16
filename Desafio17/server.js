@@ -14,26 +14,15 @@ import util from 'util';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import passport from 'passport';
-import parseArgs from 'minimist';
 import cluster from 'cluster';
-import os from 'os';
 import logger from './utils/logers.js';
 
 const app = express();
-const numCPUs = os.cpus().length;
 
-const config = {
-  alias: { p: 'port', m: 'modo' },
-  default: { port: 8080, modo: 'FORK' },
-};
-
-const args = parseArgs(process.argv.slice(2), config);
-
-if (args.modo == 'CLUSTER' && cluster.isPrimary) {
+if (cluster.isPrimary) {
   logger.info(`Master processID: ${process.pid} is running`);
-  logger.info(numCPUs);
 
-  for (let index = 0; index < numCPUs; index++) {
+  for (let index = 1; index < 2; index++) {
     cluster.fork();
   }
 
@@ -42,10 +31,8 @@ if (args.modo == 'CLUSTER' && cluster.isPrimary) {
     cluster.fork();
   });
 } else {
-  dotenv.config();
-
   const MONGO = process.env.MONGO;
-  const port = args.port;
+  const port = process.env.PORT;
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const chat = new container();
