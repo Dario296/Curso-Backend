@@ -11,6 +11,7 @@ const schemaUser = new mongoose.Schema({
 	photo: { type: String, require: true },
 	username: { type: String, require: true },
 	password: { type: String, require: true },
+	admin: Boolean,
 });
 
 const modelUser = mongoose.model(collectionUser, schemaUser);

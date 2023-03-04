@@ -11,15 +11,17 @@ export const register = new LocalStrategy({ passReqToCallback: true }, async (re
 	if (user) {
 		return done('el usuario ya esta registrado', false);
 	}
+	const url = req.file.path.slice(6)
 	const newUser = {
 		name,
 		lastName,
 		address,
 		age,
 		phoneNumber,
-		photo: req.file.path,
+		photo: url,
 		username,
 		password: createHash(password),
+		// admin: true,
 	};
 	await dbUser.add(newUser);
 	done(null, newUser);

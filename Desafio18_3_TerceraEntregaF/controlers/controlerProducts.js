@@ -10,7 +10,7 @@ export const get = (req, res) => {
 		return products
 			.get()
 			.then((productos) => {
-				res.render('productos1', { productos });
+				res.render('User/productosUser', { productos });
 			})
 			.catch((err) => {
 				res.json(err);
@@ -19,10 +19,20 @@ export const get = (req, res) => {
 	const user = req.user.username;
 	const avatar = req.user.photo;
 	const saludo = `Bienvenido ${user}`;
+	if(req.user?.admin){
+		return products
+			.get()
+			.then((productos) => {
+				res.render('Admin/productosAdmin', { productos, saludo, avatar });
+			})
+			.catch((err) => {
+				res.json(err);
+			});
+	}
 	products
 		.get()
 		.then((productos) => {
-			res.render('productos', { productos, saludo, avatar });
+			res.render('UserLogin/productosUserLogin', { productos, saludo, avatar });
 		})
 		.catch((err) => {
 			res.json(err);
@@ -37,7 +47,7 @@ export const getB = (req, res) => {
 		return products
 			.get(name)
 			.then((productos) => {
-				res.render('productos1', { productos });
+				res.render('User/productosUser', { productos });
 			})
 			.catch((err) => {
 				res.json(err);
@@ -46,10 +56,20 @@ export const getB = (req, res) => {
 	const user = req.user.username;
 	const avatar = req.user.photo;
 	const saludo = `Bienvenido ${user}`;
+	if(req.user?.admin){
+		return products
+			.get(name)
+			.then((productos) => {
+				res.render('Admin/productosAdmin', { productos, saludo, avatar });
+			})
+			.catch((err) => {
+				res.json(err);
+			});
+	}
 	products
 		.get(name)
 		.then((productos) => {
-			res.render('productos', { productos, saludo, avatar });
+			res.render('UserLogin/productosUserLogin', { productos, saludo, avatar });
 		})
 		.catch((err) => {
 			res.json(err);
