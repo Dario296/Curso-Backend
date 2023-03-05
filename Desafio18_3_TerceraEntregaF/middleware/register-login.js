@@ -2,12 +2,39 @@ import containerUser from '../containers/containerUser.js';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import bCrypt from 'bcrypt';
+import { createTransport } from 'nodemailer';
+import dotenv from "dotenv"
+import logger from "../Config/logger.js";
+
+dotenv.config();
+
+const USER = process.env.USER
+const PASS = process.env.PASS
+
+
+console.log(USER);
+console.log(PASS);
+
+const transporter = createTransport({
+   	service: 'gmail',
+   	port: 587,
+   	auth: {
+		user: USER,
+		pass: PASS
+   	}
+});
 
 const dbUser = new containerUser();
 
 export const register = new LocalStrategy({ passReqToCallback: true }, async (req, username, password, done) => {
 	const { name, lastName, address, age, phoneNumber } = req.body;
 	const user = await dbUser.get(username);
+	const mailOptions = {
+		from: 'Servidor Node.js',
+		to: USER,
+		subject: 'Nuevo Usuario Registrado',
+		html: `<h1 style="color: blue;">Se Ha Registrado Un Nuevo Usuario ${name}, ${lastName}, ${address}, ${age}, ${phoneNumber}</h1>`
+	} 
 	if (user) {
 		return done('el usuario ya esta registrado', false);
 	}
@@ -24,6 +51,12 @@ export const register = new LocalStrategy({ passReqToCallback: true }, async (re
 		// admin: true,
 	};
 	await dbUser.add(newUser);
+	try {
+		const mensaje = await transporter.sendMail(mailOptions)
+		logger.info(mensaje)
+	} catch (err) {
+		logger.error(err)
+	}
 	done(null, newUser);
 });
 
