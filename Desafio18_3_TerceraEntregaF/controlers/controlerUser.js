@@ -47,7 +47,6 @@ export const getInicio = (req, res) => {
 		return res.render("User/inicioUser")
 	}
     const user = req.user.username
-	console.log(req.user);
 	const avatar = req.user.photo
     const saludo = `Bienvenido ${user}`
 	if (req.user?.admin) {

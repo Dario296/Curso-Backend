@@ -19,7 +19,7 @@ export const get = (req, res) => {
 	const user = req.user.username;
 	const avatar = req.user.photo;
 	const saludo = `Bienvenido ${user}`;
-	if(req.user?.admin){
+	if (req.user?.admin) {
 		return products
 			.get()
 			.then((productos) => {
@@ -56,7 +56,7 @@ export const getB = (req, res) => {
 	const user = req.user.username;
 	const avatar = req.user.photo;
 	const saludo = `Bienvenido ${user}`;
-	if(req.user?.admin){
+	if (req.user?.admin) {
 		return products
 			.get(name)
 			.then((productos) => {
@@ -81,7 +81,7 @@ export const add = (req, res) => {
 	logger.info(`Ruta ${method} ${url}`);
 	const newProduct = {
 		timestamp: Date.now(),
-		name: req.body.name,
+		name: req.body.name.toLowerCase().charAt(0).toUpperCase() + req.body.name.slice(1),
 		description: req.body.description,
 		code: req.body.code,
 		price: req.body.price,
@@ -90,8 +90,8 @@ export const add = (req, res) => {
 	};
 	products
 		.add(newProduct)
-		.then((id) => {
-			res.json({ id: id }, res.redirect('/productos'));
+		.then(() => {
+			res.redirect('/productos');
 		})
 		.catch((err) => {
 			res.json(err);
@@ -111,10 +111,11 @@ export const update = (req, res) => {
 		photo: req.body.photo,
 		stock: req.body.stock,
 	};
+	console.log(newProduct);
 	products
 		.update(id, newProduct)
-		.then((id) => {
-			res.json({ id: id }, res.redirect('/productos'));
+		.then(() => {
+			res.redirect('/productos');
 		})
 		.catch((err) => {
 			res.json(err);
@@ -127,8 +128,8 @@ export const Delete = (req, res) => {
 	const id = req.params.id;
 	products
 		.delete(id)
-		.then((id) => {
-			res.json({ id: id }, res.redirect('/productos'));
+		.then(() => {
+			res.redirect('/productos');
 		})
 		.catch((err) => {
 			res.json(err);
