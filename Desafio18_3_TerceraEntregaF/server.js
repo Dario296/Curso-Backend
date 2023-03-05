@@ -67,6 +67,18 @@ if (cluster.isPrimary) {
 	app.get('/', (req, res) => {
 		res.redirect('/inicio');
 	});
+	app.get('/mensajes', (req, res) => {
+		const user = req.user.username;
+		const avatar = req.user.photo;
+		const saludo = `Bienvenido ${user}`;
+		if (req.user?.username) {
+			return res.render('UserLogin/mensajes', {saludo, avatar});
+		}
+		if (req.user?.admin) {
+			return res.render('Admin/mensajes', {saludo, avatar});
+		}
+		res.redirect("/")
+	});
 	app.get('*', (req, res) => {
 		const { url, method } = req;
 		logger.warn(`Ruta ${method} ${url} no esta implementada`);

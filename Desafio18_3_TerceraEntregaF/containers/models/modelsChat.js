@@ -4,7 +4,7 @@ const collectionChat = 'listChat';
 
 const schemaChat = new mongoose.Schema({
 	author: {
-		username: String,
+		name: String,
 	},
 	text: String,
 	fyh: String,
