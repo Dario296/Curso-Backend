@@ -23,6 +23,7 @@ h2(style="color:crimson;") Listado de productos
                         td= val.stock
                         td= val.photo
                         td
-                            button(id=`${val._id}`, class="añadir").btn.btn-success Añadir
+                            form(onsubmit=`return añadirCarrito("${val._id}")`)
+                                button.btn.btn-success.btn-sm(type='submit') Añadir al carrito
     else
         h3(class="alert alert-danger") No products

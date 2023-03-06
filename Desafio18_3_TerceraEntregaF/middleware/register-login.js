@@ -11,10 +11,6 @@ dotenv.config();
 const USER = process.env.USER
 const PASS = process.env.PASS
 
-
-console.log(USER);
-console.log(PASS);
-
 const transporter = createTransport({
    	service: 'gmail',
    	port: 587,

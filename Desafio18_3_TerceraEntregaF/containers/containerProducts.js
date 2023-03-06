@@ -14,10 +14,13 @@ export default class containerProducts {
 		}
 	}
 
-	async get(name) {
+	async get(name, id) {
 		try {
 			if (name) {
 				const data = await modelProduc.find({ name: name });
+				return data;
+			}else if (id) {
+				const data = await modelProduc.find({ _id: id });
 				return data;
 			} else {
 				const data = await modelProduc.find();

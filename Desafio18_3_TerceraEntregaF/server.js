@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
-import { ingresar, productos, registrarse, salir, inicio } from './router/routers.js';
+import { ingresar, productos, registrarse, salir, inicio, carrito } from './router/routers.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import containerChat from './containers/containerChat.js';
@@ -63,6 +63,7 @@ if (cluster.isPrimary) {
 	app.use('/inicio', inicio);
 	app.use('/productos', productos);
 	app.use('/salir', salir);
+	app.use('/carrito', carrito)
 
 	app.get('/', (req, res) => {
 		res.redirect('/inicio');

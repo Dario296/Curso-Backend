@@ -1,10 +1,4 @@
-h2(style="color:crimson;") Buscar Producto
-form.d-flex(action="/productos/busqueda", method="post")
-    div.flex-fill(class="form-group")
-        input#nameb.form-control(type="text", name="nameb", placeholder="Nombre")
-    button#Buscar.btn.btn-success.mb-3 Buscar
 h2(style="color:crimson;") Listado de productos
-h2 Inicie session para comprar
     if productos && productos.length > 0
         div(class="table-responsive")
             table.table.table-dark.my-2
@@ -23,5 +17,8 @@ h2 Inicie session para comprar
                         td= val.price
                         td= val.stock
                         td= val.photo
+                        td 
+                            
     else
         h3(class="alert alert-danger") No products
+        a.nav-link(href='/productos') Añadir Productos

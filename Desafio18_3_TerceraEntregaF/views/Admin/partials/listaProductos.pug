@@ -25,6 +25,7 @@ h2(style="color:crimson;") Listado de productos
                         td
                             form(onsubmit=`return EliminarProducto("${val._id}")`)
                                 button.btn.btn-danger.btn-sm(type='submit') Eliminar
+                        td
                             button.btn.btn-primary(type='button' data-toggle='modal' data-target='#exampleModal') Actualizar Producto
                             #exampleModal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
                                 .modal-dialog
