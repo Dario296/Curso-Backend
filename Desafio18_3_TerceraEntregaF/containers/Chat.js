@@ -1,5 +1,5 @@
 import logger from '../Config/logger.js';
-import modelChat from './models/modelsChat.js';
+import modelChat from './models/Chat.js';
 import connectMongo from '../Config/connectMongo.js';
 
 connectMongo();

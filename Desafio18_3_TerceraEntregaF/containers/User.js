@@ -1,5 +1,5 @@
 import logger from '../Config/logger.js';
-import modelUser from './models/modelsUser.js';
+import modelUser from './models/User.js';
 import connectMongo from '../Config/connectMongo.js';
 
 connectMongo();

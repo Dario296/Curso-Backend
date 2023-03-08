@@ -1,4 +1,7 @@
 import logger from '../Config/logger.js';
+import containerCart from '../containers/Cart.js';
+
+const carrito = new containerCart();
 
 export const getSingIn = (req, res) => {
 	const { url, method } = req;
@@ -19,6 +22,7 @@ export const getSignUp = (req, res) => {
 };
 
 export const getLogout = (req, res) => {
+	carrito.deleteCart(req.user.username);
 	const { url, method } = req;
 	logger.info(`Ruta ${method} ${url}`);
 	const user = req.user.username;

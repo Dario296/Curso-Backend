@@ -1,4 +1,4 @@
-import containerProducts from '../containers/containerProducts.js';
+import containerProducts from '../containers/Products.js';
 import logger from '../Config/logger.js';
 
 const products = new containerProducts();
@@ -111,7 +111,6 @@ export const update = (req, res) => {
 		photo: req.body.photo,
 		stock: req.body.stock,
 	};
-	console.log(newProduct);
 	products
 		.update(id, newProduct)
 		.then(() => {

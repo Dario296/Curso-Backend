@@ -1,5 +1,5 @@
 import logger from '../Config/logger.js';
-import modelProduc from './models/modelsProduc.js';
+import modelProduc from './models/Produc.js';
 import connectMongo from '../Config/connectMongo.js';
 
 connectMongo();
@@ -14,13 +14,10 @@ export default class containerProducts {
 		}
 	}
 
-	async get(name, id) {
+	async get(name) {
 		try {
 			if (name) {
 				const data = await modelProduc.find({ name: name });
-				return data;
-			}else if (id) {
-				const data = await modelProduc.find({ _id: id });
 				return data;
 			} else {
 				const data = await modelProduc.find();
@@ -30,10 +27,18 @@ export default class containerProducts {
 			logger.error('Error al burcar los productos ' + err);
 		}
 	}
+	async getId(id) {
+		try {
+			const data = await modelProduc.findById(id);
+			return data;
+		} catch (err) {
+			logger.error('Error al burcar los productos ' + err);
+		}
+	}
 
 	async update(id, data) {
 		try {
-			const update = await modelProduc.updateOne({ _id: id }, data);
+			const update = await modelProduc.findByIdAndUpdate(id, data);
 			return update;
 		} catch (err) {
 			logger.error('Error al burcar y actualizar los productos ' + err);

@@ -1,5 +1,5 @@
 import logger from '../Config/logger.js';
-import modelCart from './models/modelsCart.js';
+import modelCart from './models/Cart.js';
 import connectMongo from '../Config/connectMongo.js';
 
 connectMongo();
@@ -17,7 +17,7 @@ export default class containerCart {
 
 	async getCart(correo) {
 		try {
-			const cart = await modelCart.find({ author: { username: correo } });
+			const cart = await modelCart.findOne({ 'author.username': correo });
 			return cart;
 		} catch (err) {
 			logger.error('Error al buscar el carrito ' + err);
@@ -26,7 +26,7 @@ export default class containerCart {
 
 	async updateCart(correo, data) {
 		try {
-			const producUpdate = await modelCart.updateOne({ author: { username: correo } }, data);
+			const producUpdate = await modelCart.updateOne({ 'author.username': correo }, data);
 			return producUpdate;
 		} catch (err) {
 			logger.error('Error al buscar el carrito y actualizar ' + err);
@@ -35,7 +35,7 @@ export default class containerCart {
 
 	async deleteCart(correo) {
 		try {
-			const producDelete = await modelCart.deleteOne({ author: { username: correo } });
+			const producDelete = await modelCart.deleteOne({ 'author.username': correo });
 			return producDelete;
 		} catch (error) {
 			logger.error('Error al borrar el carrito ' + err);

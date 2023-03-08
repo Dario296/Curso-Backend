@@ -5,7 +5,7 @@ import MongoStore from 'connect-mongo';
 import { ingresar, productos, registrarse, salir, inicio, carrito } from './router/routers.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import containerChat from './containers/containerChat.js';
+import containerChat from './containers/Chat.js';
 import passport from 'passport';
 import dotenv from 'dotenv';
 import cluster from 'cluster';
@@ -63,7 +63,7 @@ if (cluster.isPrimary) {
 	app.use('/inicio', inicio);
 	app.use('/productos', productos);
 	app.use('/salir', salir);
-	app.use('/carrito', carrito)
+	app.use('/carrito', carrito);
 
 	app.get('/', (req, res) => {
 		res.redirect('/inicio');
@@ -73,12 +73,12 @@ if (cluster.isPrimary) {
 		const avatar = req.user.photo;
 		const saludo = `Bienvenido ${user}`;
 		if (req.user?.username) {
-			return res.render('UserLogin/mensajes', {saludo, avatar});
+			return res.render('UserLogin/mensajes', { saludo, avatar });
 		}
 		if (req.user?.admin) {
-			return res.render('Admin/mensajes', {saludo, avatar});
+			return res.render('Admin/mensajes', { saludo, avatar });
 		}
-		res.redirect("/")
+		res.redirect('/');
 	});
 	app.get('*', (req, res) => {
 		const { url, method } = req;

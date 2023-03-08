@@ -1,11 +1,14 @@
 const baseUrl = 'http://localhost:8080';
 
 function EliminarProducto(pid) {
-	fetch(baseUrl + '/productos/' + pid, { method: 'DELETE' });
+	fetch(`${baseUrl}/productos/${pid}`, { method: 'DELETE' });
 }
 
-function Actualizar(pid) {
-	console.log(pid);
+let idActualizar;
+function guardarId(id) {
+	return (idActualizar = id);
+}
+function Actualizar() {
 	const data = {
 		name: document.getElementById('name').value,
 		description: document.getElementById('description').value,
@@ -15,7 +18,7 @@ function Actualizar(pid) {
 		stock: document.getElementById('stock').value,
 	};
 
-	fetch(baseUrl + '/productos/' + pid, {
+	fetch(`${baseUrl}/productos/${idActualizar}`, {
 		method: 'PUT',
 		body: JSON.stringify(data),
 		headers: {
@@ -25,11 +28,24 @@ function Actualizar(pid) {
 }
 
 function añadirCarrito(pid) {
-	fetch(baseUrl + '/carrito' + pid, {
-		method: 'PUT',
-		body: JSON.stringify(data),
+	fetch(`${baseUrl}/carrito`, {
+		method: 'POST',
+		body: JSON.stringify({ id: pid }),
 		headers: {
 			'Content-type': 'application/json; charset=UTF-8',
 		},
 	});
+}
+
+function eliminarProducto(pid) {
+	fetch(`${baseUrl}/carrito/producto`, {
+		method: 'POST',
+		body: JSON.stringify({ id: pid }),
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+	});
+}
+function eliminarCarrito() {
+	fetch(`${baseUrl}/carrito`, {method: 'DELETE'});
 }
