@@ -23,7 +23,7 @@ h2(style="color:crimson;") Listado de productos
         .d-flex.justify-content-center
             form(onsubmit=`return eliminarCarrito()`)
                 button.btn.btn-danger.btn-sm(type='submit') Eliminar Carrito 
-            form(onsubmit=`return eliminarCarrito()`)
+            form(action="/compras", method="post")
                 button.btn.btn-success.btn-sm.mx-3(type='submit') Compar 
                             
     else

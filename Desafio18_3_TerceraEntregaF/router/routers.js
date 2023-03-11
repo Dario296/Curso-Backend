@@ -6,6 +6,7 @@ import { register, login } from '../middleware/register-login.js';
 import passport from 'passport';
 import multer from 'multer';
 import { deleteCarrito, getCarrito, postProductoCarrito, deleteProductoCarrito } from '../controlers/Cart.js';
+import  postCompra  from '../controlers/Compras.js';
 
 const upload = multer({ dest: './public/img/uploads/' });
 
@@ -18,6 +19,7 @@ const ingresar = Router();
 const registrarse = Router();
 const salir = Router();
 const carrito = Router();
+const compras = Router();
 
 ingresar.get('/', getSingIn);
 ingresar.post('/', passport.authenticate('login', { failureRedirect: '/ingresar/errorIngresar', successRedirect: '/inicio' }));
@@ -42,4 +44,6 @@ carrito.post('/', authentication, postProductoCarrito);
 carrito.post('/producto', authentication, deleteProductoCarrito);
 carrito.delete('/', authentication, deleteCarrito);
 
-export { inicio, productos, ingresar, registrarse, salir, carrito };
+compras.post('/', authentication, postCompra);
+
+export { inicio, productos, ingresar, registrarse, salir, carrito, compras };
