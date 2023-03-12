@@ -1,8 +1,8 @@
-h2(style="color:crimson;") Listado de productos
+h2(style='color:crimson;') Listado de productos
     if carritos && carritos.productos.length > 0
-        div(class="table-responsive")
+        div(class='table-responsive')
             table.table.table-dark.my-2
-                tr(style="color: yellow;")
+                tr(style='color: yellow;')
                     th Nombre
                     th Descripcion
                     th Codigo
@@ -18,14 +18,14 @@ h2(style="color:crimson;") Listado de productos
                         td= val.stock
                         td= val.photo
                         td 
-                            form(onsubmit=`return eliminarProducto("${val._id}")`)
+                            form(onsubmit=`return eliminarProducto('${val._id}')`)
                                 button.btn.btn-danger.btn-sm(type='submit') Eliminar Producto
         .d-flex.justify-content-center
             form(onsubmit=`return eliminarCarrito()`)
                 button.btn.btn-danger.btn-sm(type='submit') Eliminar Carrito 
-            form(action="/compras", method="post")
+            form(action='/compras', method='post')
                 button.btn.btn-success.btn-sm.mx-3(type='submit') Compar 
                             
     else
-        h3(class="alert alert-danger") No products
+        h3(class='alert alert-danger') No products
         a.nav-link(href='/productos') Añadir Productos

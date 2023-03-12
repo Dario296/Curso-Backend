@@ -1,5 +1,16 @@
 const baseUrl = 'http://localhost:8080';
 
+const phoneInputField = document.getElementById('phone');
+const phoneInput = window.intlTelInput(phoneInputField, {
+	utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+});
+
+function RecuperarNumero(event) {
+	let phone = phoneInput.getNumber();
+	console.log(phone);
+	document.getElementById('phoneNumber').value = phone;
+}
+
 function EliminarProducto(pid) {
 	fetch(`${baseUrl}/productos/${pid}`, { method: 'DELETE' });
 }
@@ -47,5 +58,5 @@ function eliminarProducto(pid) {
 	});
 }
 function eliminarCarrito() {
-	fetch(`${baseUrl}/carrito`, {method: 'DELETE'});
+	fetch(`${baseUrl}/carrito`, { method: 'DELETE' });
 }
