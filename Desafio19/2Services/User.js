@@ -11,19 +11,19 @@ async function getUser(Correo) {
 	return result;
 }
 
-async function postUser(Usuario, url, username, password) {
+async function postUser(data, url,) {
 	const newUser = {
-		name: Usuario.name,
-		lastName: Usuario.lastName,
-		address: Usuario.address,
-		age: Usuario.age,
-		phoneNumber: Usuario.phoneNumber,
+		name: data.name,
+		lastName: data.lastName,
+		address: data.address,
+		age: data.age,
+		phoneNumber: data.phoneNumber,
 		photo: url,
-		username,
-		password: createHash(password),
+		username: data.username,
+		password: createHash(data.password),
 		// admin: true,
 	};
-	const result = await Persistence.add(Models);
+	const result = await Persistence.add(Models, newUser);
 	return result;
 }
 

@@ -4,8 +4,9 @@ import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
 import { ingresar, productos, registrarse, salir, inicio, carrito, compras } from './router/routers.js';
 import { createServer } from 'http';
-// import { Server } from 'socket.io';
-// import containerChat from './containers/Chat.js';
+import { Server } from 'socket.io';
+import Persistence from "./1Persistence/Persistence.js";
+import Model from "./1Models/Chat.js"
 import passport from 'passport';
 import dotenv from 'dotenv';
 import cluster from 'cluster';
@@ -29,9 +30,8 @@ if (cluster.isPrimary) {
 		cluster.fork();
 	});
 } else {
-	// const chat = new containerChat();
 	const httpServer = createServer(app);
-	// const io = new Server(httpServer);
+	const io = new Server(httpServer);
 	const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 
 	app.set('views', './views');
@@ -70,16 +70,16 @@ if (cluster.isPrimary) {
 		res.redirect('/inicio');
 	});
 	app.get('/mensajes', (req, res) => {
-		const user = req.user.username;
-		const avatar = req.user.photo;
-		const saludo = `Bienvenido ${user}`;
-		if (req.user?.username) {
-			return res.render('UserLogin/mensajes', { saludo, avatar });
+		const user = req.user;
+		if (user === undefined) {
+			return res.redirect('/');
 		}
-		if (req.user?.admin) {
+		const avatar = req.user.photo;
+		const saludo = `Bienvenido ${user.username}`;
+		if (req.user.admin === true) {
 			return res.render('Admin/mensajes', { saludo, avatar });
 		}
-		res.redirect('/');
+		res.render('UserLogin/mensajes', { saludo, avatar });
 	});
 	app.get('*', (req, res) => {
 		const { url, method } = req;
@@ -87,25 +87,24 @@ if (cluster.isPrimary) {
 		res.send(`Ruta ${method} ${url} no esta implementada`);
 	});
 
-	// io.on('connection', async (socket) => {
-	// 	const listaMensajes = await chat.getChat();
-	// 	socket.emit('messages', listaMensajes);
-	// 	socket.on('new-message', async (data) => {
-	// 		if (listaMensajes.length === 0) {
-	// 			return await chat.addChat({
-	// 				...data,
-	// 				fyh: new Date().toLocaleString(),
-	// 				id: 1,
-	// 			});
-	// 		}
-	// 		await chat.addChat({
-	// 			...data,
-	// 			fyh: new Date().toLocaleString(),
-	// 			id: listaMensajes.length + 1,
-	// 		});
-	// 		io.sockets.emit('messages', listaMensajes);
-	// 	});
-	// });
+	io.on('connection', async (socket) => {
+		const listaMensajes = await Persistence.get(Model)
+		socket.emit('messages', listaMensajes);
+		socket.on('new-message', async (data) => {
+			if (listaMensajes.length === 0) {
+				return await Persistence.add(Model,{
+					...data,
+					fyh: new Date().toLocaleString(),
+					id: 1,
+				});
+			}
+			await Persistence.add(Model,{
+				...data,
+				fyh: new Date().toLocaleString(),
+				id: listaMensajes.length + 1,
+			});
+		});
+	});
 
 	httpServer.listen(PORT, () => {
 		logger.info(`RUN http://localhost:${PORT} processID: ${process.pid}`);

@@ -16,7 +16,7 @@ class Persistence {
 
 	async get(models) {
 		try {
-			const result = await models.find({}, { _id: 0, __v: 0 });
+			const result = await models.find({});
 			return result;
 		} catch (err) {
 			logger.error('Error al buscar ' + err);
@@ -25,7 +25,7 @@ class Persistence {
 
 	async getName(models, name) {
 		try {
-			const result = await models.find({ name: name }, { _id: 0, __v: 0 });
+			const result = await models.find({ name: name });
 			return result;
 		} catch (err) {
 			logger.error('Error al buscar ' + err);
@@ -34,7 +34,7 @@ class Persistence {
 
 	async getUsername(models, username) {
 		try {
-			const result = await models.find({ username: username }, { _id: 0, __v: 0 });
+			const result = await models.findOne({ username: username });
 			return result;
 		} catch (err) {
 			logger.error('Error al buscar ' + err);
@@ -43,7 +43,7 @@ class Persistence {
 
 	async getCorreo(models, correo) {
 		try {
-			const result = await models.findOne({ 'author.username': correo }, { _id: 0, __v: 0 });
+			const result = await models.findOne({ 'author.username': correo });
 			return result;
 		} catch (err) {
 			logger.error('Error al buscar ' + err);

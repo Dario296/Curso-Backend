@@ -6,4 +6,4 @@ async function postCompras(Compra) {
 	return result;
 }
 
-export default postCompras();
+export default postCompras;

@@ -22,8 +22,8 @@ export const register = new LocalStrategy({ passReqToCallback: true }, async (re
 	if (user) {
 		return done('el usuario ya esta registrado', false);
 	}
-	const newUser = await ServicesUser.postUser(data, url, username, password);
-	await Correo(USER, subject, mensaje);
+	const newUser = await ServicesUser.postUser(data, url);
+	const correo = await Correo(USER, subject, mensaje);
 	done(null, newUser);
 });
 
@@ -43,6 +43,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (username, done) => {
-	const user = await dbUser.get(username);
+	const user = await ServicesUser.getUser(username);
 	done(null, user);
 });
