@@ -7,7 +7,6 @@ export const getProduct = async (req, res) => {
 	const user = req.user;
 	if (user === undefined) {
 		const products = await ServicesProducts.getProduct();
-		console.log(products);
 		return res.render('User/productosUser', { products });
 	}
 	const saludo = `Bienvenido ${user.username}`;
@@ -25,12 +24,12 @@ export const getProductName = async (req, res) => {
 	logger.info(`Ruta ${method} ${url}`);
 	const name = req.body.nameb.charAt(0).toUpperCase() + req.body.nameb.slice(1);
 	const user = req.user;
-	const saludo = `Bienvenido ${user.username}`;
-	const avatar = user.photo;
 	if (user === undefined) {
 		const products = await ServicesProducts.getProductName(name);
 		return res.render('User/productosUser', { products });
 	}
+	const saludo = `Bienvenido ${user.username}`;
+	const avatar = user.photo;
 	if (user.admin === true) {
 		const products = await ServicesProducts.getProductName(name);
 		return res.render('Admin/productosAdmin', { products, saludo, avatar });

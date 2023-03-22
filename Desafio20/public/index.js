@@ -1,4 +1,5 @@
 const baseUrl = 'http://localhost:8080';
+let idActualizar;
 
 const phoneInputField = document.getElementById('phone');
 const phoneInput = window.intlTelInput(phoneInputField, {
@@ -7,7 +8,6 @@ const phoneInput = window.intlTelInput(phoneInputField, {
 
 function RecuperarNumero(event) {
 	let phone = phoneInput.getNumber();
-	console.log(phone);
 	document.getElementById('phoneNumber').value = phone;
 }
 
@@ -15,7 +15,6 @@ function EliminarProducto(pid) {
 	fetch(`${baseUrl}/productos/${pid}`, { method: 'DELETE' });
 }
 
-let idActualizar;
 function guardarId(id) {
 	return (idActualizar = id);
 }
