@@ -4,6 +4,13 @@ import connectMongo from '../0Config/ConnectMongo.js';
 connectMongo();
 
 class Persistence {
+	async init() {
+        console.log('products dao en mongodb -> listo!')
+    }
+	
+	async disconnect() {
+        console.log('products dao en mongodb -> cerrado!')
+    }
 	async add(models, data) {
 		try {
 			const dataAdd = new models(data);

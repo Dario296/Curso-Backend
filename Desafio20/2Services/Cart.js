@@ -1,5 +1,7 @@
-import Persistence from '../1Persistence/Persistence.js';
+// import Persistence from '../1Persistence/Persistence.js';
 import Models from '../1Models/Cart.js';
+import productsDaoFactory from '../1Persistence/factory.js';
+const Persistence = productsDaoFactory.getDao()
 
 async function getCart(Correo) {
 	const result = await Persistence.getCorreo(Models, Correo);

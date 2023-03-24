@@ -1,6 +1,8 @@
-import Persistence from '../1Persistence/Persistence.js';
+// import Persistence from '../1Persistence/Persistence.js';
 import Models from '../1Models/User.js';
 import bCrypt from 'bcrypt';
+import productsDaoFactory from '../1Persistence/factory.js';
+const Persistence = productsDaoFactory.getDao()
 
 function createHash(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
