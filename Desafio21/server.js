@@ -2,7 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import MongoStore from 'connect-mongo';
-import { ingresar, productos, registrarse, salir, inicio, carrito, compras } from './router/routers.js';
+import { ingresar, productos, registrarse, salir, inicio, carrito, compras, product } from './router/routers.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import Persistence from "./1Persistence/Persistence.js";
@@ -62,6 +62,7 @@ if (cluster.isPrimary) {
 	app.use('/ingresar', ingresar);
 	app.use('/inicio', inicio);
 	app.use('/productos', productos);
+	app.use('/product', product);
 	app.use('/salir', salir);
 	app.use('/carrito', carrito);
 	app.use('/compras', compras);

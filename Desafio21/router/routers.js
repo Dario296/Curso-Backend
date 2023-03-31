@@ -15,6 +15,7 @@ passport.use('login', login);
 
 const inicio = Router();
 const productos = Router();
+const product = Router();
 const ingresar = Router();
 const registrarse = Router();
 const salir = Router();
@@ -39,6 +40,12 @@ productos.post('/', authentication, postProduct);
 productos.put('/:id', authentication, updateProduct);
 productos.delete('/:id', authentication, deleteProduct);
 
+product.get('/', getProduct);
+product.post('/busqueda', getProductName);
+product.post('/', postProduct);
+product.put('/:id', updateProduct);
+product.delete('/:id', deleteProduct);
+
 carrito.get('/', authentication, getCart);
 carrito.post('/', authentication, postProductCart);
 carrito.post('/producto', authentication, deleteProductCart);
@@ -46,4 +53,4 @@ carrito.delete('/', authentication, deleteCart);
 
 compras.post('/', authentication, postCompra);
 
-export { inicio, productos, ingresar, registrarse, salir, carrito, compras };
+export { inicio, productos, ingresar, registrarse, salir, carrito, compras, product };
