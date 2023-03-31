@@ -1,10 +1,8 @@
-// import Persistence from '../1Persistence/Persistence.js';
-import Models from '../1Models/Cart.js';
-import productsDaoFactory from '../1Persistence/factory.js';
-const Persistence = productsDaoFactory.getDao()
+import Factory from '../1Persistence/Factory/Cart.js';
+const Persistence = Factory.getDao()
 
 async function getCart(Correo) {
-	const result = await Persistence.getCorreo(Models, Correo);
+	const result = await Persistence.getCart(Correo);
 	return result;
 }
 
@@ -20,22 +18,22 @@ async function postCart(Usuario) {
 		productos: [],
 		timestamp: Date.now(),
 	};
-	const result = await Persistence.add(Models, Data);
+	const result = await Persistence.addCart(Data);
 	return result;
 }
 
 async function postProductCart(Correo, Data) {
-	const result = await Persistence.updateCorreo(Models, Correo, { $push: { productos: Data } });
+	const result = await Persistence.updateCart(Correo, { $push: { productos: Data } });
 	return result;
 }
 
 async function deleteProductCart(Correo, Data) {
-	const result = await Persistence.updateCorreo(Models, Correo, { $pull: { productos: Data } });
+	const result = await Persistence.updateCart(Correo, { $pull: { productos: Data } });
 	return result;
 }
 
 async function deleteCart(Correo) {
-	const result = await Persistence.deleteCorreo(Models, Correo);
+	const result = await Persistence.deleteCart(Correo);
 	return result;
 }
 

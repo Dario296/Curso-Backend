@@ -1,15 +1,13 @@
-// import Persistence from '../1Persistence/Persistence.js';
-import Models from '../1Models/User.js';
 import bCrypt from 'bcrypt';
-import productsDaoFactory from '../1Persistence/factory.js';
-const Persistence = productsDaoFactory.getDao()
+import Factory from '../1Persistence//Factory/User.js';
+const Persistence = Factory.getDao()
 
 function createHash(password) {
 	return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
 }
 
 async function getUser(Correo) {
-	const result = await Persistence.getUsername(Models, Correo);
+	const result = await Persistence.get(Correo);
 	return result;
 }
 
@@ -25,7 +23,7 @@ async function postUser(data, url,) {
 		password: createHash(data.password),
 		// admin: true,
 	};
-	const result = await Persistence.add(Models, newUser);
+	const result = await Persistence.add(newUser);
 	return result;
 }
 

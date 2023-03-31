@@ -1,10 +1,8 @@
-// import Persistence from '../1Persistence/Persistence.js';
-import Models from '../1Models/compras.js';
-import productsDaoFactory from '../1Persistence/factory.js';
-const Persistence = productsDaoFactory.getDao()
+import Factory from '../1Persistence/Factory/Compras.js';
+const Persistence = Factory.getDao()
 
 async function postCompras(Compra) {
-	const result = await Persistence.add(Models, Compra);
+	const result = await Persistence.addCompras(Compra);
 	return result;
 }
 

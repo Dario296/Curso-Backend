@@ -5,13 +5,12 @@ import MongoStore from 'connect-mongo';
 import { ingresar, productos, registrarse, salir, inicio, carrito, compras } from './router/routers.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import Persistence from "./1Persistence/Persistence.js";
-import Model from "./1Models/Chat.js"
 import passport from 'passport';
 import dotenv from 'dotenv';
 import cluster from 'cluster';
 import os from 'os';
 import logger from './0Config/Logger.js';
+import Factory from './1Persistence/Factory/Chat.js';
 
 dotenv.config();
 
@@ -19,6 +18,7 @@ const app = express();
 const numCPUS = os.cpus().length;
 const MONGO = process.env.MONGO;
 const PORT = process.env.PORT;
+const Persistence = Factory.getDao();
 
 if (cluster.isPrimary) {
 	logger.info(`Master processID: ${process.pid} is running`);
@@ -88,17 +88,17 @@ if (cluster.isPrimary) {
 	});
 
 	io.on('connection', async (socket) => {
-		const listaMensajes = await Persistence.get(Model)
+		const listaMensajes = await Persistence.getChat();
 		socket.emit('messages', listaMensajes);
 		socket.on('new-message', async (data) => {
 			if (listaMensajes.length === 0) {
-				return await Persistence.add(Model,{
+				return await Persistence.addChat({
 					...data,
 					fyh: new Date().toLocaleString(),
 					id: 1,
 				});
 			}
-			await Persistence.add(Model,{
+			await Persistence.addChat({
 				...data,
 				fyh: new Date().toLocaleString(),
 				id: listaMensajes.length + 1,
